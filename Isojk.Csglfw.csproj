@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Target Name="PlatformCheck" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+        <Error Text="Unsupported platform '$(Platform)'" Condition="'$(Platform)' != 'x64' and '$(Platform)' != 'ARM64'"/>
+    </Target>
+
+    <PropertyGroup>
+        <AssemblyName>Isojk.Csglfw</AssemblyName>
+        <OutputType>Library</OutputType>
+        <TargetFrameworks>net8.0;net8.0-windows;net8.0-macos;net9.0;net9.0-windows;net9.0-macos</TargetFrameworks>
+        <Platforms>x64;ARM64</Platforms>
+
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DisableCalli>false</DisableCalli>
+        <GeneratedCodeFolder>$(MSBuildThisFileDirectory).generated</GeneratedCodeFolder>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Isojk.Csglfw</RootNamespace>
+
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <IsAotCompatible>true</IsAotCompatible>
+        <NoWarn>NU5100</NoWarn>
+        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugType>Embedded</DebugType>
+        <EmbedAllSources>True</EmbedAllSources>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <Optimize>true</Optimize>
+    </PropertyGroup> 
+
+    <PropertyGroup Label="Package Info">
+        <PackageId>Isojk.Csglfw</PackageId>
+        <PackageVersion>$(AssemblyVersion)</PackageVersion>
+        <Description>Low-level bindings for the GLFW library</Description>
+        <PackageTags>glfw gui opengl vulkan</PackageTags>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Copyright>Copyright 2025 (c) Jan Kos. All rights reserved.</Copyright>
+        <Authors>Jan Kos</Authors>
+        <ProjectUrl>https://github.com/isojk/csglfw</ProjectUrl>
+        <RepositoryUrl>https://github.com/isojk/csglfw</RepositoryUrl>
+    </PropertyGroup>
+
+    <Target Name="_GLFW3PrintProperties" BeforeTargets="BeforeBuild">
+        <Message Importance="High" Text="Configuration: $(Configuration)" />
+        <Message Importance="High" Text="Platform: $(Platform)" />
+    </Target>
+
+    <ItemGroup Label="Source Files">
+        <Compile Include="src/API.Tokens.cs" />
+        <Compile Include="src/API.Types.cs" />
+		<Compile Include="src/API.Functions.cs" />
+        <Compile Include="src/API.Functions.Unsafe.cs" />
+        <Compile Include="src/API.Loader.cs" />
+        <Compile Include="src/Helpers.cs" />
+        <Compile Include="src/Diagnostics.cs" />
+    </ItemGroup>
+        
+    <ItemGroup>
+        <!-- Native dynamic libraries -->
+        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\win-x64\native\glfw3.dll">
+            <TargetRid>win-x64</TargetRid>
+        </_GLFW3_DynamicLibraryFile>
+
+        <!-- Native static libraries -->
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3.lib">
+            <TargetRid>win-x64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
+
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3_mt.lib">
+            <TargetRid>win-x64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
+
+        <!-- Packaging -->
+        <None Include="buildTransitive\**">
+            <Pack>true</Pack>
+            <PackagePath>buildTransitive</PackagePath>
+        </None>
+
+        <None Include="@(_GLFW3_DynamicLibraryFile)">
+            <Visible>False</Visible>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
+        </None>
+
+        <None Include="@(_GLFW3_StatibLibraryFile)" Condition="'$(GLFWEnableStaticBuild)' != 'true'">
+            <Visible>False</Visible>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackageCopyToOutput>false</PackageCopyToOutput>
+            <Pack>true</Pack>
+            <PackagePath>staticLibraries\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
+        </None>
+    </ItemGroup>
+</Project>

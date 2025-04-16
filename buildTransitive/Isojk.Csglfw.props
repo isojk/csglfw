@@ -1,0 +1,20 @@
+<Project>
+    <PropertyGroup>
+        <_GLFWIsWindows>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))</_GLFWIsWindows>
+        <_GLFWIsOSX>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))</_GLFWIsOSX>
+        <_GLFWIsLinux>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))</_GLFWIsLinux>
+        <_GLFWIsInRestore>false</_GLFWIsInRestore>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(_GLFWIsWindows)">
+        <_GLFWDynamicLibaryName>glfw3.dll</_GLFWDynamicLibaryName>
+        <_GLFWStaticLibraryName>glfw3_mt.lib</_GLFWStaticLibraryName>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(_GLFWIsOSX)">
+        <_GLFWDynamicLibaryName>@TODO_OSX_DYNAMIC</_GLFWDynamicLibaryName>
+        <_GLFWStaticLibraryName>@TODO_OSX_STATIC</_GLFWStaticLibraryName>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(_GLFWIsLinux)">
+        <_GLFWDynamicLibaryName>@TODO_LINUX_DYNAMIC</_GLFWDynamicLibaryName>
+        <_GLFWStaticLibraryName>@TODO_LINUX_STATIC</_GLFWStaticLibraryName>
+    </PropertyGroup>
+</Project>

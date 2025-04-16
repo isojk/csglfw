@@ -1,0 +1,159 @@
+<Project>
+    <Target Name="GLFWCustomBeforeRestoreCLI" BeforeTargets="Restore">
+        <PropertyGroup>
+            <_GLFWIsInRestore>true</_GLFWIsInRestore>
+        </PropertyGroup>
+    </Target>
+    <Target Name="GLFWCustomBeforeRestoreSLN" BeforeTargets="_GenerateRestoreProjectSpec">
+        <PropertyGroup>
+            <_GLFWIsInRestore>true</_GLFWIsInRestore>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="GLFWLinkStaticLibrariesIntoReferencingProject" BeforeTargets="BeforeBuild" Condition="'$(GLFWEnableStaticBuild)' == 'true'">
+        <!--
+        Supported rids:
+            win-x64
+            win-arm64
+            osx-x64
+            osx-arm64
+            linux-x64
+            linux-arm64
+        -->
+
+        <PropertyGroup>
+            <_GLFWStaticLibrariesPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticLibraries))</_GLFWStaticLibrariesPath>
+            <_GLFWIsAOTPublish>false</_GLFWIsAOTPublish>
+            <_GLFWIsAOTPublish Condition="'$(Configuration)' == 'Release' and $(_IsPublishing)">true</_GLFWIsAOTPublish>
+            <_GLFWEnableStaticBuild>false</_GLFWEnableStaticBuild>
+            <_GLFWEnableStaticBuild Condition="$(_GLFWIsAOTPublish)">true</_GLFWEnableStaticBuild>
+            <_GLFWRuntimeIdentifier>$(RuntimeIdentifier)</_GLFWRuntimeIdentifier>
+        </PropertyGroup>
+
+        <!-- Platform fallbacks -->
+        <PropertyGroup>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsWindows) and '$(Platform)' == 'x64'">win-x64</_GLFWRuntimeIdentifier>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsWindows) and '$(Platform)' == 'ARM64'">win-arm64</_GLFWRuntimeIdentifier>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsOSX) and '$(Platform)' == 'x64'">osx-x64</_GLFWRuntimeIdentifier>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsOSX) and '$(Platform)' == 'ARM64'">osx-arm64</_GLFWRuntimeIdentifier>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsLinux) and '$(Platform)' == 'x64'">linux-x64</_GLFWRuntimeIdentifier>
+            <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsLinux) and '$(Platform)' == 'ARM64'">linux-arm64</_GLFWRuntimeIdentifier>
+        </PropertyGroup>
+
+        <Message Importance="High" Text="Native library GLFW will be linked statically into your executable" />
+        <Message Importance="High" Text="- StaticLibrariesPath: $(_GLFWStaticLibrariesPath)" />
+        <Message Importance="High" Text="- IsAOTPublish: $(_GLFWIsAOTPublish)" />
+        <Message Importance="High" Text="- EnableStaticBuild: $(_GLFWEnableStaticBuild)" />
+        <Message Importance="High" Text="- IsWindows: $(_GLFWIsWindows)" />
+        <Message Importance="High" Text="- IsOSX: $(_GLFWIsOSX)" />
+        <Message Importance="High" Text="- IsLinux: $(_GLFWIsLinux)" />
+        <Message Importance="High" Text="- RuntimeIdentifier: $(_GLFWRuntimeIdentifier)" />
+        <Message Importance="High" Text="- Platform: $(Platform)" />
+        <!--
+        <Message Importance="High" Text="- OutputPath: $(OutputPath)" />
+        <Message Importance="High" Text="- PublishDir: $(PublishDir)" />
+        -->
+
+        <PropertyGroup Condition="$(_GLFWIsAOTPublish)">
+            <DefineConstants>$(DefineConstants);_GLFW_AOT</DefineConstants>
+        </PropertyGroup>
+        <PropertyGroup Condition="$(_GLFWEnableStaticBuild)">
+            <DefineConstants>$(DefineConstants);_GLFW_STATIC</DefineConstants>
+        </PropertyGroup>
+
+        <ItemGroup Condition="$(_GLFWIsWindows)">
+            <NativeLibrary Include="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib" />
+            <NativeLibrary Include="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Shell32.Lib" />
+        </ItemGroup>
+
+        <PropertyGroup>
+            <_GLFWStaticLibraryFullPath>$(_GLFWStaticLibrariesPath)\$(_GLFWRuntimeIdentifier)\native\$(_GLFWStaticLibraryName)</_GLFWStaticLibraryFullPath>
+        </PropertyGroup>
+
+        <Message Importance="High" Text="Linking: $(_GLFWStaticLibraryFullPath)" Condition="Exists($(_GLFWStaticLibraryFullPath))" />
+        <Error Text="$(_GLFWStaticLibraryFullPath) not found" Condition="!Exists($(_GLFWStaticLibraryFullPath))"></Error>
+
+        <ItemGroup Condition="Exists($(_GLFWStaticLibraryFullPath))">
+            <DirectPInvoke Include="__glfw3__" />
+            <NativeLibrary Include="$(_GLFWStaticLibraryFullPath)" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="GLFWRemoveLeftoverDynamicLibraries" AfterTargets="Publish" Condition="'$(GLFWEnableStaticBuild)' == 'true'">
+        <PropertyGroup>
+            <_GLFWIsAOTPublish>false</_GLFWIsAOTPublish>
+            <_GLFWIsAOTPublish Condition="'$(Configuration)' == 'Release' and $(_IsPublishing)">true</_GLFWIsAOTPublish>
+            <_GLFWEnableStaticBuild>false</_GLFWEnableStaticBuild>
+            <_GLFWEnableStaticBuild Condition="$(_GLFWIsAOTPublish)">true</_GLFWEnableStaticBuild>
+            <_GLFWRuntimeIdentifier>$(RuntimeIdentifier)</_GLFWRuntimeIdentifier>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <_GLFWRuntimesDirLevel1Path>$(MSBuildProjectDirectory)\$(PublishDir)runtimes</_GLFWRuntimesDirLevel1Path>
+            <_GLFWRuntimesDirLevel2Path>$(MSBuildProjectDirectory)\$(PublishDir)runtimes\$(_GLFWRuntimeIdentifier)</_GLFWRuntimesDirLevel2Path>
+            <_GLFWRuntimesDirLevel3Path>$(MSBuildProjectDirectory)\$(PublishDir)runtimes\$(_GLFWRuntimeIdentifier)\native</_GLFWRuntimesDirLevel3Path>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <_GLFWRemovedDynamicLibrary1>$(MSBuildProjectDirectory)\$(PublishDir)$(_GLFWDynamicLibaryName)</_GLFWRemovedDynamicLibrary1>
+            <_GLFWRemovedDynamicLibrary2>$(_GLFWRuntimesDirLevel3Path)\$(_GLFWDynamicLibaryName)</_GLFWRemovedDynamicLibrary2>
+        </PropertyGroup>
+
+        <!-- <Message Importance="High" Text="- IsAOTPublish: $(_GLFWIsAOTPublish)" />
+        <Message Importance="High" Text="- EnableStaticBuild: $(_GLFWEnableStaticBuild)" />
+        <Message Importance="High" Text="- RemovedDynamicLibrary1: $(_GLFWRemovedDynamicLibrary1)" />
+        <Message Importance="High" Text="- RemovedDynamicLibrary1 exists" Condition="Exists($(_GLFWRemovedDynamicLibrary1))" />
+        <Message Importance="High" Text="- RemovedDynamicLibrary2: $(_GLFWRemovedDynamicLibrary2)" />
+        <Message Importance="High" Text="- RemovedDynamicLibrary2 exists" Condition="Exists($(_GLFWRemovedDynamicLibrary2))" /> -->
+
+        <!-- <Message Importance="High" Text="Removing $(_GLFWRemovedDynamicLibrary1)" Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWRemovedDynamicLibrary1))" /> -->
+        <Delete Files="$(_GLFWRemovedDynamicLibrary1)" Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWRemovedDynamicLibrary1))" />
+
+        <!-- <Message Importance="High" Text="Removing $(_GLFWRemovedDynamicLibrary2)" Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWRemovedDynamicLibrary2))" /> -->
+        <Delete Files="$(_GLFWRemovedDynamicLibrary2)" Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWRemovedDynamicLibrary2))" />
+
+        <PropertyGroup>
+            <_GLFWRuntimesDirLevel1>$(_GLFWRuntimesDirLevel1Path)\*.*</_GLFWRuntimesDirLevel1>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <_GLFWRuntimesDirLevel2>$(_GLFWRuntimesDirLevel2Path)\*.*</_GLFWRuntimesDirLevel2>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <_GLFWRuntimesDirLevel3>$(_GLFWRuntimesDirLevel3Path)\*.*</_GLFWRuntimesDirLevel3>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <_GLFWRuntimesDirLevel1Check Include="$(_GLFWRuntimesDirLevel1)" />
+        </ItemGroup>
+
+        <ItemGroup>
+            <_GLFWRuntimesDirLevel2Check Include="$(_GLFWRuntimesDirLevel2)" />
+        </ItemGroup>
+
+        <ItemGroup>
+            <_GLFWRuntimesDirLevel3Check Include="$(_GLFWRuntimesDirLevel3)" />
+        </ItemGroup>
+
+        <PropertyGroup>
+            <_GLFWIsEmptyRuntimesDirLevel1>false</_GLFWIsEmptyRuntimesDirLevel1>
+            <_GLFWIsEmptyRuntimesDirLevel2>false</_GLFWIsEmptyRuntimesDirLevel2>
+            <_GLFWIsEmptyRuntimesDirLevel3>false</_GLFWIsEmptyRuntimesDirLevel3>
+
+            <_GLFWIsEmptyRuntimesDirLevel1 Condition="$(_GLFWEnableStaticBuild) and '@(_GLFWRuntimesDirLevel1Check)' == ''">true</_GLFWIsEmptyRuntimesDirLevel1>
+            <_GLFWIsEmptyRuntimesDirLevel2 Condition="$(_GLFWEnableStaticBuild) and '@(_GLFWRuntimesDirLevel2Check)' == ''">true</_GLFWIsEmptyRuntimesDirLevel2>
+            <_GLFWIsEmptyRuntimesDirLevel3 Condition="$(_GLFWEnableStaticBuild) and '@(_GLFWRuntimesDirLevel3Check)' == ''">true</_GLFWIsEmptyRuntimesDirLevel3>
+        </PropertyGroup>
+
+        <!-- <Message Importance="High" Text="Removing directory $(_GLFWRuntimesDirLevel3Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel3)" /> -->
+        <RemoveDir Directories="$(_GLFWRuntimesDirLevel3Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel3)" />
+
+        <!-- <Message Importance="High" Text="Removing directory $(_GLFWRuntimesDirLevel2Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel2)" /> -->
+        <RemoveDir Directories="$(_GLFWRuntimesDirLevel2Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel2)" />
+
+        <!-- <Message Importance="High" Text="Removing directory $(_GLFWRuntimesDirLevel1Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel1)" /> -->
+        <RemoveDir Directories="$(_GLFWRuntimesDirLevel1Path)" Condition="$(_GLFWIsEmptyRuntimesDirLevel1)" />
+    </Target>
+
+</Project>
