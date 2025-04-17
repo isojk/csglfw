@@ -4,9 +4,17 @@
     </Target>
 
     <PropertyGroup>
+        <Authors>Jan Kos</Authors>
+        <Description>Modern low-level bindings for the GLFW library</Description>
+        <Copyright>Copyright 2025 (c) Jan Kos. All rights reserved.</Copyright>
+        <ProjectUrl>https://github.com/isojk/csglfw</ProjectUrl>
+        <RepositoryUrl>https://github.com/isojk/csglfw</RepositoryUrl>
+
         <AssemblyName>Isojk.Csglfw</AssemblyName>
+        <AssemblyVersion>0.0.2</AssemblyVersion>
+        <FileVersion>0.0.2.0</FileVersion>
         <OutputType>Library</OutputType>
-        <TargetFrameworks>net8.0;net8.0-windows;net8.0-macos;net9.0;net9.0-windows;net9.0-macos</TargetFrameworks>
+        <TargetFrameworks>net9.0;net9.0-windows;net9.0-macos;net8.0;net8.0-windows;net8.0-macos</TargetFrameworks>
         <Platforms>x64;ARM64</Platforms>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -16,8 +24,8 @@
         <Nullable>enable</Nullable>
         <RootNamespace>Isojk.Csglfw</RootNamespace>
 
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>true</GenerateTargetFrameworkAttribute>
         <IsAotCompatible>true</IsAotCompatible>
         <NoWarn>NU5100</NoWarn>
         <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -37,14 +45,11 @@
 
     <PropertyGroup Label="Package Info">
         <PackageId>Isojk.Csglfw</PackageId>
-        <PackageVersion>$(AssemblyVersion)</PackageVersion>
-        <Description>Low-level bindings for the GLFW library</Description>
-        <PackageTags>glfw gui opengl vulkan</PackageTags>
+        <PackageVersion>$(AssemblyVersion)-$(Platform)</PackageVersion>
+        <PackageTags>glfw gui window graphics gl opengl</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <Copyright>Copyright 2025 (c) Jan Kos. All rights reserved.</Copyright>
-        <Authors>Jan Kos</Authors>
-        <ProjectUrl>https://github.com/isojk/csglfw</ProjectUrl>
-        <RepositoryUrl>https://github.com/isojk/csglfw</RepositoryUrl>
     </PropertyGroup>
 
     <Target Name="_GLFW3PrintProperties" BeforeTargets="BeforeBuild">
@@ -78,6 +83,21 @@
         </_GLFW3_StatibLibraryFile>
 
         <!-- Packaging -->
+        <None Include="README.md">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+
+        <None Include="LICENSE">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+
+        <None Include="ACKNOWLEDGEMENTS">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+
         <None Include="buildTransitive\**">
             <Pack>true</Pack>
             <PackagePath>buildTransitive</PackagePath>
