@@ -24,7 +24,7 @@
         <PropertyGroup>
             <_GLFWStaticLibrariesPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticLibraries))</_GLFWStaticLibrariesPath>
             <_GLFWIsAOTPublish>false</_GLFWIsAOTPublish>
-            <_GLFWIsAOTPublish Condition="'$(Configuration)' == 'Release' and $(_IsPublishing)">true</_GLFWIsAOTPublish>
+            <_GLFWIsAOTPublish Condition="'$(Configuration)' == 'Release' and '$(_IsPublishing)' == 'true'">true</_GLFWIsAOTPublish>
             <_GLFWEnableStaticBuild>false</_GLFWEnableStaticBuild>
             <_GLFWEnableStaticBuild Condition="$(_GLFWIsAOTPublish)">true</_GLFWEnableStaticBuild>
             <_GLFWRuntimeIdentifier>$(RuntimeIdentifier)</_GLFWRuntimeIdentifier>
@@ -40,15 +40,15 @@
             <_GLFWRuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and $(_GLFWIsLinux) and '$(Platform)' == 'ARM64'">linux-arm64</_GLFWRuntimeIdentifier>
         </PropertyGroup>
 
-        <Message Importance="High" Text="Native library GLFW will be linked statically into your executable" />
-        <Message Importance="High" Text="- StaticLibrariesPath: $(_GLFWStaticLibrariesPath)" />
-        <Message Importance="High" Text="- IsAOTPublish: $(_GLFWIsAOTPublish)" />
-        <Message Importance="High" Text="- EnableStaticBuild: $(_GLFWEnableStaticBuild)" />
-        <Message Importance="High" Text="- IsWindows: $(_GLFWIsWindows)" />
-        <Message Importance="High" Text="- IsOSX: $(_GLFWIsOSX)" />
-        <Message Importance="High" Text="- IsLinux: $(_GLFWIsLinux)" />
-        <Message Importance="High" Text="- RuntimeIdentifier: $(_GLFWRuntimeIdentifier)" />
-        <Message Importance="High" Text="- Platform: $(Platform)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="Native library GLFW will be linked statically into your executable" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- StaticLibrariesPath: $(_GLFWStaticLibrariesPath)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- IsAOTPublish: $(_GLFWIsAOTPublish)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- EnableStaticBuild: $(_GLFWEnableStaticBuild)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- IsWindows: $(_GLFWIsWindows)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- IsOSX: $(_GLFWIsOSX)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- IsLinux: $(_GLFWIsLinux)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- RuntimeIdentifier: $(_GLFWRuntimeIdentifier)" />
+        <Message Importance="High" Condition="$(_GLFWEnableStaticBuild)" Text="- Platform: $(Platform)" />
         <!--
         <Message Importance="High" Text="- OutputPath: $(OutputPath)" />
         <Message Importance="High" Text="- PublishDir: $(PublishDir)" />
@@ -61,7 +61,7 @@
             <DefineConstants>$(DefineConstants);_GLFW_STATIC</DefineConstants>
         </PropertyGroup>
 
-        <ItemGroup Condition="$(_GLFWIsWindows)">
+        <ItemGroup Condition="$(_GLFWEnableStaticBuild) and $(_GLFWIsWindows)">
             <NativeLibrary Include="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib" />
             <NativeLibrary Include="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Shell32.Lib" />
         </ItemGroup>
@@ -70,10 +70,10 @@
             <_GLFWStaticLibraryFullPath>$(_GLFWStaticLibrariesPath)\$(_GLFWRuntimeIdentifier)\native\$(_GLFWStaticLibraryName)</_GLFWStaticLibraryFullPath>
         </PropertyGroup>
 
-        <Message Importance="High" Text="Linking: $(_GLFWStaticLibraryFullPath)" Condition="Exists($(_GLFWStaticLibraryFullPath))" />
-        <Error Text="$(_GLFWStaticLibraryFullPath) not found" Condition="!Exists($(_GLFWStaticLibraryFullPath))"></Error>
+        <Message Importance="High" Text="Linking: $(_GLFWStaticLibraryFullPath)" Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWStaticLibraryFullPath))" />
+        <Error Text="$(_GLFWStaticLibraryFullPath) not found" Condition="$(_GLFWEnableStaticBuild) and !Exists($(_GLFWStaticLibraryFullPath))"></Error>
 
-        <ItemGroup Condition="Exists($(_GLFWStaticLibraryFullPath))">
+        <ItemGroup Condition="$(_GLFWEnableStaticBuild) and Exists($(_GLFWStaticLibraryFullPath))">
             <DirectPInvoke Include="__glfw3__" />
             <NativeLibrary Include="$(_GLFWStaticLibraryFullPath)" />
         </ItemGroup>
