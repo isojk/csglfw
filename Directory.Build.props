@@ -1,7 +1,4 @@
 <Project>
-    <PropertyGroup>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-    </PropertyGroup>
     <PropertyGroup Label="Paths">
         <EnableDefaultItems>false</EnableDefaultItems>
         <BaseOutputPath>bin</BaseOutputPath>
