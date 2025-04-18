@@ -10,8 +10,8 @@
         <_GLFWStaticLibraryName>glfw3_mt.lib</_GLFWStaticLibraryName>
     </PropertyGroup>
     <PropertyGroup Condition="$(_GLFWIsOSX)">
-        <_GLFWDynamicLibaryName>@TODO_OSX_DYNAMIC</_GLFWDynamicLibaryName>
-        <_GLFWStaticLibraryName>@TODO_OSX_STATIC</_GLFWStaticLibraryName>
+        <_GLFWDynamicLibaryName>libglfw.3.dylib</_GLFWDynamicLibaryName>
+        <_GLFWStaticLibraryName>libglfw3.a</_GLFWStaticLibraryName>
     </PropertyGroup>
     <PropertyGroup Condition="$(_GLFWIsLinux)">
         <_GLFWDynamicLibaryName>@TODO_LINUX_DYNAMIC</_GLFWDynamicLibaryName>

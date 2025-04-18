@@ -60,11 +60,28 @@ public static partial class API {
             
             if (libraryName == LibraryName) {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-                    rid = "win-x64";
                     filename = "glfw3.dll";
+                    switch (RuntimeInformation.ProcessArchitecture) {
+                        case Architecture.X64:
+                            rid = "win-x64";
+                            break;
+
+                        case Architecture.Arm64:
+                            rid = "win-arm64";
+                            break;
+                    }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
-                    // @TODO
+                    filename = "libglfw.3.dylib";
+                    switch (RuntimeInformation.ProcessArchitecture) {
+                        case Architecture.X64:
+                            rid = "osx-x64";
+                            break;
+
+                        case Architecture.Arm64:
+                            rid = "osx-arm64";
+                            break;
+                    }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)) {
                     // @TODO
