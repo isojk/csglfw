@@ -1,11 +1,8 @@
 # Build x64
 dotnet build -c Release -p:Platform="x64"
 
-# Build ARM64
-dotnet build -c Release -p:Platform="ARM64"
-
 # Pack x64
 dotnet pack -c Release -p:Platform=x64 -o <OUTPUT>
 
-# Pack ARM64
-dotnet pack -c Release -p:Platform=ARM64 -o <OUTPUT>
+# Publish NET 9, win-x64
+dotnet publish -c Release -p:TargetFramework=net9.0 -p:Platform=x64 -r win-x64 --verbosity detailed
