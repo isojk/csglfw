@@ -1,2 +1,4 @@
+*.a     binary
 *.dll   binary
+*.dylib binary
 *.lib   binary
