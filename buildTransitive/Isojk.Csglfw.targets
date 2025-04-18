@@ -66,6 +66,12 @@
             <NativeLibrary Include="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Shell32.Lib" />
         </ItemGroup>
 
+        <ItemGroup Condition="$(_GLFWEnableStaticBuild) and $(_GLFWIsOSX)">
+            <LinkerArg Include="-framework Cocoa" />
+            <LinkerArg Include="-framework OpenGL" />
+            <LinkerArg Include="-framework IOKit" />
+        </ItemGroup>
+
         <PropertyGroup>
             <_GLFWStaticLibraryFullPath>$(_GLFWStaticLibrariesPath)\$(_GLFWRuntimeIdentifier)\native\$(_GLFWStaticLibraryName)</_GLFWStaticLibraryFullPath>
         </PropertyGroup>
