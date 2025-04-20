@@ -1,4 +1,5 @@
-*.a     binary
-*.dll   binary
-*.dylib binary
-*.lib   binary
+*.a         binary
+*.dll       binary
+*.dylib     binary
+*.lib       binary
+*.so.3.4    binary

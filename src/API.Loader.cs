@@ -59,32 +59,41 @@ public static partial class API {
             searchPath = searchPath ?? SumAllFlags<DllImportSearchPath>();
             
             if (libraryName == LibraryName) {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-                    filename = "glfw3.dll";
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)) {
+                    filename = "libglfw.so.3.4";
                     switch (RuntimeInformation.ProcessArchitecture) {
-                        case Architecture.X64:
-                            rid = "win-x64";
+                        case Architecture.Arm64:
+                            rid = "linux-arm64";
                             break;
 
-                        case Architecture.Arm64:
-                            rid = "win-arm64";
+                        case Architecture.X64:
+                            rid = "linux-x64";
                             break;
                     }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
                     filename = "libglfw.3.dylib";
                     switch (RuntimeInformation.ProcessArchitecture) {
-                        case Architecture.X64:
-                            rid = "osx-x64";
-                            break;
-
                         case Architecture.Arm64:
                             rid = "osx-arm64";
                             break;
+
+                        case Architecture.X64:
+                            rid = "osx-x64";
+                            break;
                     }
                 }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)) {
-                    // @TODO
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                    filename = "glfw3.dll";
+                    switch (RuntimeInformation.ProcessArchitecture) {
+                        case Architecture.Arm64:
+                            rid = "win-arm64";
+                            break;
+
+                        case Architecture.X64:
+                            rid = "win-x64";
+                            break;
+                    }
                 }
 
                 if (rid is not null && filename is not null) {

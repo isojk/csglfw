@@ -11,6 +11,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <_IsWindows>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))</_IsWindows>
+        <_IsOSX>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))</_IsOSX>
+        <_IsLinux>$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))</_IsLinux>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <Authors>Jan Kos</Authors>
         <Description>Modern low-level bindings for the GLFW library</Description>
         <Copyright>Copyright 2025 (c) Jan Kos. All rights reserved.</Copyright>
@@ -21,7 +27,11 @@
         <AssemblyVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)</AssemblyVersion>
         <FileVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionBuild)</FileVersion>
         <OutputType>Library</OutputType>
-        <TargetFrameworks>net9.0;net9.0-windows;net9.0-macos;net8.0;net8.0-windows;net8.0-macos</TargetFrameworks>
+        
+        <TargetFrameworks Condition="'$(_IsWindows)' == 'true'">net9.0;net9.0-windows;net8.0;net8.0-windows</TargetFrameworks>
+        <TargetFrameworks Condition="'$(_IsOSX)' == 'true'">net9.0;net9.0-macos;net8.0;net8.0-macos</TargetFrameworks>
+        <TargetFrameworks Condition="'$(_IsLinux)' == 'true'">net9.0;net8.0</TargetFrameworks>
+        
         <Platforms>x64;ARM64</Platforms>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -76,6 +86,16 @@
         
     <ItemGroup>
         <!-- Native dynamic libraries -->
+
+        <!-- linux-arm64 -->
+        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\linux-arm64\native\libglfw.so.3.4">
+            <TargetRid>linux-arm64</TargetRid>
+        </_GLFW3_DynamicLibraryFile>
+
+        <!-- linux-x64 -->
+        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\linux-x64\native\libglfw.so.3.4">
+            <TargetRid>linux-x64</TargetRid>
+        </_GLFW3_DynamicLibraryFile>
         
         <!-- osx-arm64 -->
         <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\osx-arm64\native\libglfw.3.dylib">
@@ -93,6 +113,16 @@
         </_GLFW3_DynamicLibraryFile>
 
         <!-- Native static libraries -->
+
+        <!-- linux-arm64 -->
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\linux-arm64\native\libglfw3.a">
+            <TargetRid>linux-arm64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
+
+        <!-- linux-x64 -->
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\linux-x64\native\libglfw3.a">
+            <TargetRid>linux-x64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
 
         <!-- osx-arm64 -->
         <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\osx-arm64\native\libglfw3.a">

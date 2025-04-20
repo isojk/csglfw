@@ -1,4 +1,4 @@
-Low-level C# bindings for the [GLFW](https://github.com/glfw/glfw) library.
+Low-level C# bindings for the [GLFW](https://github.com/glfw/glfw) library, version **3.4**.
 
 This library utilizes modern language and compiler features (like [Function Pointers](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/function-pointers) or [P/Invoke source generator](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke-source-generation)) and therefore requires .NET 8 as the minimum target framework version.
 
@@ -36,12 +36,25 @@ If this library is instead referenced as a `ProjectReference` (as a local projec
 
 | System | Processor Architecture | Notes |
 |---|---|---|
-| Windows | x64 | |
-| Windows | ARM64 | Not tested |
-| macOS | x64 | |
-| macOS | ARM64 | Not tested |
-<!-- | Linux | x64 | | -->
-<!-- | Linux | ARM64 | Not tested | -->
+| Linux | ARM64 | **Untested**<br>Compiled using `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
+| Linux | x64 | Compiled using `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
+| macOS | ARM64 | **Untested**<br>Taken from the official distribution |
+| macOS | x64 | Taken from the official distribution |
+| Windows | x64 | Taken from the official distribution |
+<!-- | Windows | ARM64 | **Not tested** | -->
+
+## WSL
+
+If you encounter issues on Windows Subsystem for Linux, try to set the platform to X11 manually as a quick fix, like so:
+```cs
+glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
+
+if (!glfwInit()) {
+    return;
+}
+
+// ...
+```
 
 ## Basic Example
 

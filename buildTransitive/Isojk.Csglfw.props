@@ -6,15 +6,15 @@
         <_GLFWIsInRestore>false</_GLFWIsInRestore>
     </PropertyGroup>
     <PropertyGroup Condition="$(_GLFWIsWindows)">
-        <_GLFWDynamicLibaryName>glfw3.dll</_GLFWDynamicLibaryName>
+        <_GLFWDynamicLibraryName>glfw3.dll</_GLFWDynamicLibraryName>
         <_GLFWStaticLibraryName>glfw3_mt.lib</_GLFWStaticLibraryName>
     </PropertyGroup>
     <PropertyGroup Condition="$(_GLFWIsOSX)">
-        <_GLFWDynamicLibaryName>libglfw.3.dylib</_GLFWDynamicLibaryName>
+        <_GLFWDynamicLibraryName>libglfw.3.dylib</_GLFWDynamicLibraryName>
         <_GLFWStaticLibraryName>libglfw3.a</_GLFWStaticLibraryName>
     </PropertyGroup>
     <PropertyGroup Condition="$(_GLFWIsLinux)">
-        <_GLFWDynamicLibaryName>@TODO_LINUX_DYNAMIC</_GLFWDynamicLibaryName>
-        <_GLFWStaticLibraryName>@TODO_LINUX_STATIC</_GLFWStaticLibraryName>
+        <_GLFWDynamicLibraryName>libglfw.so.3.4</_GLFWDynamicLibraryName>
+        <_GLFWStaticLibraryName>libglfw3.a</_GLFWStaticLibraryName>
     </PropertyGroup>
 </Project>
