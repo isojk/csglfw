@@ -36,7 +36,7 @@ If this library is instead referenced as a `ProjectReference` (as a local projec
 
 | System | Processor Architecture | Notes |
 |---|---|---|
-| Linux | ARM64 | **Untested**<br>Compiled using `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
+| Linux | ARM64 | **Untested**<br>Compiled using `arm-linux-gnueabihf-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
 | Linux | x64 | Compiled using `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
 | macOS | ARM64 | **Untested**<br>Taken from the official distribution |
 | macOS | x64 | Taken from the official distribution |
