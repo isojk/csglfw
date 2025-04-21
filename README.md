@@ -149,3 +149,10 @@ static unsafe void KeyCallback(GLFWwindow window, int key, int scancode, int act
     }
 }
 ```
+
+
+<!--
+Purge NuGet cache: dotnet nuget locals --clear all
+Pack: dotnet pack -c Release -p:Platform=x64 -o d:\nuget
+
+-->

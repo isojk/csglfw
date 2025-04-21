@@ -18,7 +18,7 @@
 
     <PropertyGroup>
         <Authors>Jan Kos</Authors>
-        <Description>Modern low-level bindings for the GLFW library</Description>
+        <Description>Low-level C# bindings for the GLFW library</Description>
         <Copyright>Copyright 2025 (c) Jan Kos. All rights reserved.</Copyright>
         <ProjectUrl>https://github.com/isojk/csglfw</ProjectUrl>
         <RepositoryUrl>https://github.com/isojk/csglfw</RepositoryUrl>
@@ -62,7 +62,7 @@
 
     <PropertyGroup Label="Package Info">
         <PackageId>Isojk.Csglfw</PackageId>
-        <PackageVersion>$(AssemblyVersion)-$(Platform)</PackageVersion>
+        <PackageVersion>$(AssemblyVersion)-$(Platform.ToLower())</PackageVersion>
         <PackageTags>glfw gui window graphics gl opengl</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -85,79 +85,86 @@
     </ItemGroup>
         
     <ItemGroup>
-        <!-- Native dynamic libraries -->
-
+        <!-- ARM64 Dynamic libraries -->
+        
         <!-- linux-arm64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\linux-arm64\native\libglfw.so.3.4">
+        <_GLFW3_DynamicLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)runtimes\linux-arm64\native\libglfw.so.3.4">
             <TargetRid>linux-arm64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
-
-        <!-- linux-x64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\linux-x64\native\libglfw.so.3.4">
-            <TargetRid>linux-x64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
+        </_GLFW3_DynamicLibraryFile_ARM64>
         
         <!-- osx-arm64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\osx-arm64\native\libglfw.3.dylib">
+        <_GLFW3_DynamicLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)runtimes\osx-arm64\native\libglfw.3.dylib">
             <TargetRid>osx-arm64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
-
-        <!-- osx-x64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\osx-x64\native\libglfw.3.dylib">
-            <TargetRid>osx-x64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
+        </_GLFW3_DynamicLibraryFile_ARM64>
 
         <!-- win-arm64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\win-arm64\native\glfw3.dll">
+        <_GLFW3_DynamicLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)runtimes\win-arm64\native\glfw3.dll">
             <TargetRid>win-arm64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
+        </_GLFW3_DynamicLibraryFile_ARM64>
 
-        <!-- win-x64 -->
-        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\win-x64\native\glfw3.dll">
-            <TargetRid>win-x64</TargetRid>
-        </_GLFW3_DynamicLibraryFile>
 
-        <!-- Native static libraries -->
-
-        <!-- linux-arm64 -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\linux-arm64\native\libglfw3.a">
-            <TargetRid>linux-arm64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
+        <!-- x64 Dynamic libraries -->
 
         <!-- linux-x64 -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\linux-x64\native\libglfw3.a">
+        <_GLFW3_DynamicLibraryFile_x64 Include="$(MSBuildThisFileDirectory)runtimes\linux-x64\native\libglfw.so.3.4">
             <TargetRid>linux-x64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
+        </_GLFW3_DynamicLibraryFile_x64>
+        
+        <!-- osx-x64 -->
+        <_GLFW3_DynamicLibraryFile_x64 Include="$(MSBuildThisFileDirectory)runtimes\osx-x64\native\libglfw.3.dylib">
+            <TargetRid>osx-x64</TargetRid>
+        </_GLFW3_DynamicLibraryFile_x64>
+        
+        <!-- win-x64 -->
+        <_GLFW3_DynamicLibraryFile_x64 Include="$(MSBuildThisFileDirectory)runtimes\win-x64\native\glfw3.dll">
+            <TargetRid>win-x64</TargetRid>
+        </_GLFW3_DynamicLibraryFile_x64>
+
+
+        <!-- ARM64 Static libraries -->
+
+        <!-- linux-arm64 -->
+        <_GLFW3_StatibLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)staticLibraries\linux-arm64\native\libglfw3.a">
+            <TargetRid>linux-arm64</TargetRid>
+        </_GLFW3_StatibLibraryFile_ARM64>
 
         <!-- osx-arm64 -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\osx-arm64\native\libglfw3.a">
+        <_GLFW3_StatibLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)staticLibraries\osx-arm64\native\libglfw3.a">
             <TargetRid>osx-arm64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
-
-        <!-- osx-x64 -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\osx-x64\native\libglfw3.a">
-            <TargetRid>osx-x64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
-
+        </_GLFW3_StatibLibraryFile_ARM64>
+        
         <!-- win-arm64 /MD -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3.lib">
+        <_GLFW3_StatibLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3.lib">
             <TargetRid>win-arm64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
-
+        </_GLFW3_StatibLibraryFile_ARM64>
+        
         <!-- win-arm64 /MT -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3_mt.lib">
+        <_GLFW3_StatibLibraryFile_ARM64 Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3_mt.lib">
             <TargetRid>win-arm64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
+        </_GLFW3_StatibLibraryFile_ARM64>
+
+        
+        <!-- x64 Static libraries -->
+        
+        <!-- linux-x64 -->
+        <_GLFW3_StatibLibraryFile_x64 Include="$(MSBuildThisFileDirectory)staticLibraries\linux-x64\native\libglfw3.a">
+            <TargetRid>linux-x64</TargetRid>
+        </_GLFW3_StatibLibraryFile_x64>
+        
+        <!-- osx-x64 -->
+        <_GLFW3_StatibLibraryFile_x64 Include="$(MSBuildThisFileDirectory)staticLibraries\osx-x64\native\libglfw3.a">
+            <TargetRid>osx-x64</TargetRid>
+        </_GLFW3_StatibLibraryFile_x64>
 
         <!-- win-x64 /MD -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3.lib">
+        <_GLFW3_StatibLibraryFile_x64 Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3.lib">
             <TargetRid>win-x64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
-
+        </_GLFW3_StatibLibraryFile_x64>
+        
         <!-- win-x64 /MT -->
-        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3_mt.lib">
+        <_GLFW3_StatibLibraryFile_x64 Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3_mt.lib">
             <TargetRid>win-x64</TargetRid>
-        </_GLFW3_StatibLibraryFile>
+        </_GLFW3_StatibLibraryFile_x64>
 
         <!-- Packaging -->
         <None Include="README.md">
@@ -180,7 +187,7 @@
             <PackagePath>buildTransitive</PackagePath>
         </None>
 
-        <None Include="@(_GLFW3_DynamicLibraryFile)">
+        <None Include="@(_GLFW3_DynamicLibraryFile_ARM64)" Condition="'$(Platform.ToLower())' == 'arm64'">
             <Visible>False</Visible>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackageCopyToOutput>true</PackageCopyToOutput>
@@ -188,12 +195,29 @@
             <PackagePath>runtimes\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
         </None>
 
-        <None Include="@(_GLFW3_StatibLibraryFile)" Condition="'$(GLFWEnableStaticBuild)' != 'true'">
+        <None Include="@(_GLFW3_DynamicLibraryFile_x64)" Condition="'$(Platform.ToLower())' == 'x64'">
+            <Visible>False</Visible>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
+        </None>
+
+        <None Include="@(_GLFW3_StatibLibraryFile_ARM64)" Condition="'$(Platform.ToLower())' == 'arm64' and '$(GLFWEnableStaticBuild)' != 'true'">
             <Visible>False</Visible>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackageCopyToOutput>false</PackageCopyToOutput>
             <Pack>true</Pack>
             <PackagePath>staticLibraries\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
         </None>
+
+        <None Include="@(_GLFW3_StatibLibraryFile_x64)" Condition="'$(Platform.ToLower())' == 'x64' and '$(GLFWEnableStaticBuild)' != 'true'">
+            <Visible>False</Visible>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackageCopyToOutput>false</PackageCopyToOutput>
+            <Pack>true</Pack>
+            <PackagePath>staticLibraries\%(TargetRid)\native\%(Filename)%(Extension)</PackagePath>
+        </None>
+
     </ItemGroup>
 </Project>
