@@ -1,12 +1,22 @@
-<!--
-[![Isojk.Csglfw](https://img.shields.io/nuget/v/Isojk.Csglfw.svg?cacheSeconds=3600&label=Nuget)](https://www.nuget.org/packages/Isojk.Csglfw)
--->
+[![Isojk.Csglfw](https://img.shields.io/nuget/vpre/Isojk.Csglfw.svg?cacheSeconds=3600&label=Nuget)](https://www.nuget.org/packages/Isojk.Csglfw)
 
 Low-level C# bindings for the [GLFW](https://github.com/glfw/glfw) library, version **3.4**.
 
 This library utilizes modern language and compiler features (like [Function Pointers](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/function-pointers) or [P/Invoke source generator](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke-source-generation)) and therefore requires .NET 8 as the minimum target framework version.
 
 All types, constants and methods have exactly the same name as their native counterparts.
+
+## Installation
+
+For x64 platform:
+```
+dotnet add package Isojk.Csglfw --version 1.0.0-x64
+```
+
+For ARM64 platform:
+```
+dotnet add package Isojk.Csglfw --version 1.0.0-arm64
+```
 
 ## Static Linking
 
