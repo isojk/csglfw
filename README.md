@@ -52,7 +52,7 @@ linux-arm64 dynamic:    rm -rf ./build && cmake -S . -B build -DBUILD_SHARED_LIB
 | Linux | x64 | Compiled with `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
 | macOS | ARM64 | **Untested**<br>Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
 | macOS | x64 | Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
-| Windows | ARM64 | **Not tested**<br>Compiled with MSVC 19.43.34810.0<br>Windows SDK version 10.0.22621.0<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC build tools (v14.43-17.13)<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC Spectre-mitigated libs (v14.43-17.13) |
+| Windows | ARM64 | **Untested**<br>Compiled with MSVC 19.43.34810.0<br>Windows SDK version 10.0.22621.0<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC build tools (v14.43-17.13)<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC Spectre-mitigated libs (v14.43-17.13) |
 | Windows | x64 | Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
 
 ## WSL
