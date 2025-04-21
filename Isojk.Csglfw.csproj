@@ -4,9 +4,9 @@
     </Target>
 
     <PropertyGroup Label="Versioning">
-        <VersionMajor>0</VersionMajor>
+        <VersionMajor>1</VersionMajor>
         <VersionMinor>0</VersionMinor>
-        <VersionPatch>5</VersionPatch>
+        <VersionPatch>0</VersionPatch>
         <VersionBuild>0</VersionBuild>
     </PropertyGroup>
 
