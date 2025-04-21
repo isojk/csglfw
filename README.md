@@ -1,4 +1,6 @@
-[![Isojk.Csglfw](https://img.shields.io/nuget/vpre/Isojk.Csglfw.svg?cacheSeconds=3600&label=Nuget)](https://www.nuget.org/packages/Isojk.Csglfw)
+![License Badge](https://img.shields.io/github/license/isojk/csglfw?cacheSeconds=3600)
+[![Isojk.Csglfw](https://img.shields.io/nuget/vpre/Isojk.Csglfw?cacheSeconds=3600&label=nuget)](https://www.nuget.org/packages/Isojk.Csglfw)
+![.NET 8.0](https://img.shields.io/badge/.NET-8.0-blue?cacheSeconds=3600)
 
 Low-level C# bindings for the [GLFW](https://github.com/glfw/glfw) library, version **3.4**.
 
