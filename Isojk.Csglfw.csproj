@@ -107,6 +107,11 @@
             <TargetRid>osx-x64</TargetRid>
         </_GLFW3_DynamicLibraryFile>
 
+        <!-- win-arm64 -->
+        <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\win-arm64\native\glfw3.dll">
+            <TargetRid>win-arm64</TargetRid>
+        </_GLFW3_DynamicLibraryFile>
+
         <!-- win-x64 -->
         <_GLFW3_DynamicLibraryFile Include="$(MSBuildThisFileDirectory)runtimes\win-x64\native\glfw3.dll">
             <TargetRid>win-x64</TargetRid>
@@ -134,12 +139,22 @@
             <TargetRid>osx-x64</TargetRid>
         </_GLFW3_StatibLibraryFile>
 
-        <!-- win-x64 -->
+        <!-- win-arm64 /MD -->
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3.lib">
+            <TargetRid>win-arm64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
+
+        <!-- win-arm64 /MT -->
+        <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-arm64\native\glfw3_mt.lib">
+            <TargetRid>win-arm64</TargetRid>
+        </_GLFW3_StatibLibraryFile>
+
+        <!-- win-x64 /MD -->
         <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3.lib">
             <TargetRid>win-x64</TargetRid>
         </_GLFW3_StatibLibraryFile>
 
-        <!-- win-x64 -->
+        <!-- win-x64 /MT -->
         <_GLFW3_StatibLibraryFile Include="$(MSBuildThisFileDirectory)staticLibraries\win-x64\native\glfw3_mt.lib">
             <TargetRid>win-x64</TargetRid>
         </_GLFW3_StatibLibraryFile>

@@ -34,14 +34,26 @@ If this library is instead referenced as a `ProjectReference` (as a local projec
 
 ## Supported Platforms
 
+<!--
+win-arm64 static /MT:   Remove-Item -Recurse .\build; cmake -S . -B build -AARM64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+win-arm64 static /MD:   Remove-Item -Recurse .\build; cmake -S . -B build -AARM64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL
+win-arm64 dynamic:      Remove-Item -Recurse .\build; cmake -S . -B build -AARM64 -DBUILD_SHARED_LIBS=ON
+
+linux-arm64 gcc:        sudo apt-get install gcc-arm-linux-gnueabihf
+                        sudo ln -fs /usr/bin/arm-linux-gnueabihf-gcc /etc/alternatives/cc
+
+linux-arm64 static:     rm -rf ./build && cmake -S . -B build -DBUILD_SHARED_LIBS=OFF -DX11_X11_LIB=ignore_this
+linux-arm64 dynamic:    rm -rf ./build && cmake -S . -B build -DBUILD_SHARED_LIBS=ON -DX11_X11_LIB=ignore_this
+-->
+
 | System | Processor Architecture | Notes |
 |---|---|---|
-| Linux | ARM64 | **Untested**<br>Compiled using `arm-linux-gnueabihf-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
-| Linux | x64 | Compiled using `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
-| macOS | ARM64 | **Untested**<br>Taken from the official distribution |
-| macOS | x64 | Taken from the official distribution |
-| Windows | x64 | Taken from the official distribution |
-<!-- | Windows | ARM64 | **Not tested** | -->
+| Linux | ARM64 | **Untested**<br>Compiled with `arm-linux-gnueabihf-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
+| Linux | x64 | Compiled with `x86_64-linux-gnu-gcc-12` version 12.2.0 (Debian 12.2.0-14) on Debian 12 |
+| macOS | ARM64 | **Untested**<br>Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
+| macOS | x64 | Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
+| Windows | ARM64 | **Not tested**<br>Compiled with MSVC 19.43.34810.0<br>Windows SDK version 10.0.22621.0<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC build tools (v14.43-17.13)<br>MSVC v143 - VS2022 C++ ARM64/ARM64EC Spectre-mitigated libs (v14.43-17.13) |
+| Windows | x64 | Copied from the [official package with pre-compiled binaries](https://www.glfw.org/download) |
 
 ## WSL
 
